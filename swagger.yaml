@@ -1,0 +1,2471 @@
+swagger: '2.0'
+info:
+  description: '<p>This API is designed to provide authoritative National Park Service (NPS) data and content about parks and their facilities, events, news, alerts, and more. Explore the NPS API below and even try to make API calls. In order to try an API call, you''ll need to click on the "Authorize" button below and add your API key. If you don''t have an API key yet, visit our <a href="https://www.nps.gov/subjects/developer/get-started.htm">Get Started page</a>.</p>'
+  version: 1.0.0
+  title: National Park Service
+host: developer.nps.gov
+basePath: /api/v1
+tags:
+  - name: alerts
+    description: Alert-related data
+  - name: articles
+    description: Articles-related data
+  - name: campgrounds
+    description: Campground-related data
+  - name: events
+    description: Events-related data
+  - name: lessonplans
+    description: Lesson Plan-related data
+  - name: newsreleases
+    description: News-related data
+  - name: parks
+    description: Park-related data
+  - name: people
+    description: People-related data
+  - name: places
+    description: Place-related data
+  - name: visitorcenters
+    description: Visitor Center-related data
+schemes:
+  - https
+paths:
+  /parks:
+    get:
+      tags:
+        - parks
+      summary: 'Park basics data includes location, contact, operating hours, and entrance fee/pass information for each national park At least five photos of each park are also available.'
+      description: ''
+      operationId: getPark
+      produces:
+        - application/json
+      parameters:
+        - name: parkCode
+          in: query
+          description: A comma delimited list of park codes (each 4-10 characters in length).
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: stateCode
+          in: query
+          description: A comma delimited list of 2 character state codes.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: limit
+          in: query
+          description: Number of results to return per request. Default is 50.
+          required: false
+          type: integer
+        - name: start
+          in: query
+          description: 'Get the next [limit] results starting with this number.'
+          required: false
+          type: integer
+        - name: q
+          in: query
+          description: Term to search on
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: A comma delimited list of resource properties to include in the JSON response in addition to the default properties. The available properties for each resource are listed in the documentation for each resource. Invalid property values will be ignored.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: sort
+          in: query
+          description: 'A comma delimited list of resource properties to sort the results by. Each resource identifies which properties are ''sortable''. Ascending order is assumed for each property. If descending order is desired, the unary negative should prefix the property name. The sortable properties are listed in the documentation for each resource. Invalid property values will be ignored.'
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Park'
+        '400':
+          description: Invalid status value
+  /alerts:
+    get:
+      tags:
+        - alerts
+      summary: 'Alerts communicate information about hazardous, potentially hazardous, or changing conditions that may affect a visit to a national park. Alert data includes the type of alert, title, description, and optional link to additional information.'
+      description: ''
+      operationId: getAlerts
+      produces:
+        - application/json
+      parameters:
+        - name: parkCode
+          in: query
+          description: A comma delimited list of park codes (each 4-10 characters in length).
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: stateCode
+          in: query
+          description: A comma delimited list of 2 character state codes.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: limit
+          in: query
+          description: Number of results to return per request. Default is 50.
+          required: false
+          type: integer
+        - name: start
+          in: query
+          description: 'Get the next [limit] results starting with this number.'
+          required: false
+          type: integer
+        - name: q
+          in: query
+          description: Term to search on
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: A comma delimited list of resource properties to include in the JSON response in addition to the default properties. The available properties for each resource are listed in the documentation for each resource. Invalid property values will be ignored.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: sort
+          in: query
+          description: 'A comma delimited list of resource properties to sort the results by. Each resource identifies which properties are ''sortable''. Ascending order is assumed for each property. If descending order is desired, the unary negative should prefix the property name. The sortable properties are listed in the documentation for each resource. Invalid property values will be ignored.'
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Alert'
+        '400':
+          description: Invalid status value
+  /articles:
+    get:
+      tags:
+        - articles
+      summary: 'Articles are shared content assets that are tagged so they can appear in a variety of places on NPS.gov. Data includes a title, image, short description of the content, and link to more information about the asset.'
+      description: ''
+      operationId: getArticles
+      produces:
+        - application/json
+      parameters:
+        - name: parkCode
+          in: query
+          description: A comma delimited list of park codes (each 4-10 characters in length).
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: stateCode
+          in: query
+          description: A comma delimited list of 2 character state codes.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: limit
+          in: query
+          description: Number of results to return per request. Default is 50.
+          required: false
+          type: integer
+        - name: start
+          in: query
+          description: 'Get the next [limit] results starting with this number.'
+          required: false
+          type: integer
+        - name: q
+          in: query
+          description: Term to search on
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: A comma delimited list of resource properties to include in the JSON response in addition to the default properties. The available properties for each resource are listed in the documentation for each resource. Invalid property values will be ignored.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: sort
+          in: query
+          description: 'A comma delimited list of resource properties to sort the results by. Each resource identifies which properties are ''sortable''. Ascending order is assumed for each property. If descending order is desired, the unary negative should prefix the property name. The sortable properties are listed in the documentation for each resource. Invalid property values will be ignored.'
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Article'
+        '400':
+          description: Invalid status value
+  /campgrounds:
+    get:
+      tags:
+        - campgrounds
+      summary: 'Campground data includes location, contact, operating hours, site amenities, fee, and accessibility information for campgrounds in national parks At least one representative photo of each campground is available Some parks have multiple campgrounds of a variety of types (eg, developed or primitive); others have none.'
+      description: ''
+      operationId: getCampgrounds
+      produces:
+        - application/json
+      parameters:
+        - name: parkCode
+          in: query
+          description: A comma delimited list of park codes (each 4-10 characters in length).
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: stateCode
+          in: query
+          description: A comma delimited list of 2 character state codes.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: limit
+          in: query
+          description: Number of results to return per request. Default is 50.
+          required: false
+          type: integer
+        - name: start
+          in: query
+          description: 'Get the next [limit] results starting with this number.'
+          required: false
+          type: integer
+        - name: q
+          in: query
+          description: Term to search on
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: A comma delimited list of resource properties to include in the JSON response in addition to the default properties. The available properties for each resource are listed in the documentation for each resource. Invalid property values will be ignored.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: sort
+          in: query
+          description: 'A comma delimited list of resource properties to sort the results by. Each resource identifies which properties are ''sortable''. Ascending order is assumed for each property. If descending order is desired, the unary negative should prefix the property name. The sortable properties are listed in the documentation for each resource. Invalid property values will be ignored.'
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Campground'
+        '400':
+          description: Invalid status value
+  /events:
+    get:
+      tags:
+        - events
+      summary: 'Event data includes information about the date, time, fee, and description of events taking place in national parks.'
+      description: ''
+      operationId: getEvents
+      produces:
+        - application/json
+      parameters:
+        - name: parkCode
+          in: query
+          description: A comma delimited list of park codes (each 4-10 characters in length).
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: stateCode
+          in: query
+          description: A comma delimited list of 2 character state codes.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: limit
+          in: query
+          description: Number of results to return per request. Default is 50.
+          required: false
+          type: integer
+        - name: start
+          in: query
+          description: 'Get the next [limit] results starting with this number.'
+          required: false
+          type: integer
+        - name: q
+          in: query
+          description: Term to search on
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: A comma delimited list of resource properties to include in the JSON response in addition to the default properties. The available properties for each resource are listed in the documentation for each resource. Invalid property values will be ignored.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: sort
+          in: query
+          description: 'A comma delimited list of resource properties to sort the results by. Each resource identifies which properties are ''sortable''. Ascending order is assumed for each property. If descending order is desired, the unary negative should prefix the property name. The sortable properties are listed in the documentation for each resource. Invalid property values will be ignored.'
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Event'
+        '400':
+          description: Invalid status value
+  /lessonplans:
+    get:
+      tags:
+        - lessonplans
+      summary: 'Lesson plans are standards-based resources about national parks for teacher to use in their classrooms Lesson plan data includes objectives, grade level, subject, duration, and standards information.'
+      description: ''
+      operationId: getLessonPlans
+      produces:
+        - application/json
+      parameters:
+        - name: parkCode
+          in: query
+          description: A comma delimited list of park codes (each 4-10 characters in length).
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: stateCode
+          in: query
+          description: A comma delimited list of 2 character state codes.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: limit
+          in: query
+          description: Number of results to return per request. Default is 50.
+          required: false
+          type: integer
+        - name: start
+          in: query
+          description: 'Get the next [limit] results starting with this number.'
+          required: false
+          type: integer
+        - name: q
+          in: query
+          description: Term to search on
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: A comma delimited list of resource properties to include in the JSON response in addition to the default properties. The available properties for each resource are listed in the documentation for each resource. Invalid property values will be ignored.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: sort
+          in: query
+          description: 'A comma delimited list of resource properties to sort the results by. Each resource identifies which properties are ''sortable''. Ascending order is assumed for each property. If descending order is desired, the unary negative should prefix the property name. The sortable properties are listed in the documentation for each resource. Invalid property values will be ignored.'
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/LessonPlan'
+        '400':
+          description: Invalid status value
+  /newsreleases:
+    get:
+      tags:
+        - newsreleases
+      summary: 'News release data includes a title, abstract, and link to national park news releases, as well as an optional image.'
+      description: ''
+      operationId: getNewsReleases
+      produces:
+        - application/json
+      parameters:
+        - name: parkCode
+          in: query
+          description: A comma delimited list of park codes (each 4-10 characters in length).
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: stateCode
+          in: query
+          description: A comma delimited list of 2 character state codes.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: limit
+          in: query
+          description: Number of results to return per request. Default is 50.
+          required: false
+          type: integer
+        - name: start
+          in: query
+          description: 'Get the next [limit] results starting with this number.'
+          required: false
+          type: integer
+        - name: q
+          in: query
+          description: Term to search on
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: A comma delimited list of resource properties to include in the JSON response in addition to the default properties. The available properties for each resource are listed in the documentation for each resource. Invalid property values will be ignored.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: sort
+          in: query
+          description: 'A comma delimited list of resource properties to sort the results by. Each resource identifies which properties are ''sortable''. Ascending order is assumed for each property. If descending order is desired, the unary negative should prefix the property name. The sortable properties are listed in the documentation for each resource. Invalid property values will be ignored.'
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/NewsRelease'
+        '400':
+          description: Invalid status value
+  /people:
+    get:
+      tags:
+        - people
+      summary: 'People are shared content assets that are tagged so they can appear in a variety of places on NPS.gov. Data includes a title, image, short description of the content, and link to more information about the asset.'
+      description: ''
+      operationId: getPeople
+      produces:
+        - application/json
+      parameters:
+        - name: parkCode
+          in: query
+          description: A comma delimited list of park codes (each 4-10 characters in length).
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: stateCode
+          in: query
+          description: A comma delimited list of 2 character state codes.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: limit
+          in: query
+          description: Number of results to return per request. Default is 50.
+          required: false
+          type: integer
+        - name: start
+          in: query
+          description: 'Get the next [limit] results starting with this number.'
+          required: false
+          type: integer
+        - name: q
+          in: query
+          description: Term to search on
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: A comma delimited list of resource properties to include in the JSON response in addition to the default properties. The available properties for each resource are listed in the documentation for each resource. Invalid property values will be ignored.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: sort
+          in: query
+          description: 'A comma delimited list of resource properties to sort the results by. Each resource identifies which properties are ''sortable''. Ascending order is assumed for each property. If descending order is desired, the unary negative should prefix the property name. The sortable properties are listed in the documentation for each resource. Invalid property values will be ignored.'
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Person'
+        '400':
+          description: Invalid status value
+  /places:
+    get:
+      tags:
+        - places
+      summary: 'Places are shared content assets that are tagged so they can appear in a variety of places on NPS.gov. Data includes a title, image, short description of the content, and link to more information about the asset.'
+      description: ''
+      operationId: getPlaces
+      produces:
+        - application/json
+      parameters:
+        - name: parkCode
+          in: query
+          description: A comma delimited list of park codes (each 4-10 characters in length).
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: stateCode
+          in: query
+          description: A comma delimited list of 2 character state codes.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: limit
+          in: query
+          description: Number of results to return per request. Default is 50.
+          required: false
+          type: integer
+        - name: start
+          in: query
+          description: 'Get the next [limit] results starting with this number.'
+          required: false
+          type: integer
+        - name: q
+          in: query
+          description: Term to search on
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: A comma delimited list of resource properties to include in the JSON response in addition to the default properties. The available properties for each resource are listed in the documentation for each resource. Invalid property values will be ignored.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: sort
+          in: query
+          description: 'A comma delimited list of resource properties to sort the results by. Each resource identifies which properties are ''sortable''. Ascending order is assumed for each property. If descending order is desired, the unary negative should prefix the property name. The sortable properties are listed in the documentation for each resource. Invalid property values will be ignored.'
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Place'
+        '400':
+          description: Invalid status value
+  /visitorcenters:
+    get:
+      tags:
+        - visitorcenters
+      summary: 'Visitor center data includes location, contact, and operating hours information for visitor centers and other visitor contact facilities in national parks At least one visitor center is listed for each park; some parks with multiple visitor centers may include information about more than one.'
+      description: ''
+      operationId: getVisitorCenters
+      produces:
+        - application/json
+      parameters:
+        - name: parkCode
+          in: query
+          description: A comma delimited list of park codes (each 4-10 characters in length).
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: stateCode
+          in: query
+          description: A comma delimited list of 2 character state codes.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: limit
+          in: query
+          description: Number of results to return per request. Default is 50.
+          required: false
+          type: integer
+        - name: start
+          in: query
+          description: 'Get the next [limit] results starting with this number.'
+          required: false
+          type: integer
+        - name: q
+          in: query
+          description: Term to search on
+          required: false
+          type: string
+        - name: fields
+          in: query
+          description: A comma delimited list of resource properties to include in the JSON response in addition to the default properties. The available properties for each resource are listed in the documentation for each resource. Invalid property values will be ignored.
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+        - name: sort
+          in: query
+          description: 'A comma delimited list of resource properties to sort the results by. Each resource identifies which properties are ''sortable''. Ascending order is assumed for each property. If descending order is desired, the unary negative should prefix the property name. The sortable properties are listed in the documentation for each resource. Invalid property values will be ignored.'
+          required: false
+          type: array
+          items:
+            type: string
+            default: available
+          collectionFormat: multi
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/VisitorCenter'
+        '400':
+          description: Invalid status value
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: api_key
+    in: query
+definitions:
+  Alert:
+    type: object
+    properties:
+      total:
+        type: integer
+        format: int32
+        example: 1
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            category:
+              type: string
+              description: 'Alert type: danger, caution, information, or park closure'
+              enum:
+                - Danger
+                - Caution
+                - Information
+                - Park Closure
+            description:
+              type: string
+              description: Alert description
+            id:
+              type: string
+              description: Unique identifier for an alert record
+            parkCode:
+              type: string
+              description: A variable width character code that uniquely identifies a specific park
+            title:
+              type: string
+              description: Alert title
+            url:
+              type: string
+              description: 'Link to more information about the alert, if available'
+          example:
+            - category: Information
+              description: Some destinations are unavailable because of construction related to the Canyon Overlooks and Trails Restoration Project.
+              id: 4C3095E2-1DD8-B71B-0BAC8E16AABF3113
+              parkCode: yell
+              title: Area Closures in Canyon
+              url: 'https://www.nps.gov/yell/planyourvisit/canyonprojects.htm'
+            - category: Caution
+              description: The road between Roaring Mountain and Willow Park is under construction. Expect delays up to 30 minutes and night closures June 11–September 10 from 10pm–7am (excluding Saturday nights).
+              id: 696FC8C9-1DD8-B71B-0BF3D47A2BF92890
+              parkCode: yell
+              title: Construction & Nightly Closures between Norris & Mammoth Hot Springs
+              url: 'https://www.nps.gov/yell/planyourvisit/parkroads.htm'
+      limit:
+        type: integer
+        format: int32
+        example: 50
+      start:
+        type: integer
+        format: int32
+        example: 1
+  Article:
+    type: object
+    properties:
+      total:
+        type: integer
+        format: int32
+        example: 1
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+              description: Unique identifier for this article
+            listingDescription:
+              type: string
+              description: Short description of the content
+            listingImage:
+              type: object
+              description: Small image that accompanies the short description
+              properties:
+                credit:
+                  type: string
+                altText:
+                  type: string
+                title:
+                  type: string
+                description:
+                  type: string
+                caption:
+                  type: string
+                url:
+                  type: string
+            relatedParks:
+              type: array
+              description: Parks that have a tie to this asset in a comma-delimited list
+              items:
+                type: string
+            title:
+              type: string
+              description: Article title
+            url:
+              type: string
+              description: Link to article
+          example:
+            - id: 806081
+              listingDescription: 'Saguaro National Park was established in 1933 specifically to protect an impressive stand of many large saguaro cacti – the “Cactus Forest” – at the base of the Rincon Mountains east of Tucson, Arizona. However, concerns about the decline of the Cactus Forest have been expressed throughout the history of the park. As a result, research on saguaros in the park began as early as 1939 and continues to this day.'
+              listingImage:
+                - credit: ''
+                  altText: ''
+                  title: ''
+                  description: ''
+                  caption: ''
+                  url: ''
+              relatedParks: sagu
+              title: 'A History of Saguaro Cactus Monitoring in Saguaro National Park, 1939-2007'
+              url: 'https://www.nps.gov/articles/history-of-saguaro-cactus-monitoring.htm'
+            - id: 806401
+              listingDescription: 'On February 19, 1942, President Franklin D. Roosevelt signed Executive Order No. 9066 empowering the U.S. Army to designate areas from which "any or all persons may be excluded." No person of Japanese ancestry living in the United States was ever convicted of any serious act of espionage or sabotage during the war.'
+              listingImage:
+                - credit: ''
+                  altText: ''
+                  title: ''
+                  description: ''
+                  caption: ''
+                  url: ''
+              relatedParks: ''
+              title: A Brief History of Japanese American Relocation During World War II
+              url: 'https://www.nps.gov/articles/historyinternment.htm'
+      limit:
+        type: integer
+        format: int32
+        example: 50
+      start:
+        type: integer
+        format: int32
+        example: 1
+  Campground:
+    type: object
+    properties:
+      total:
+        type: integer
+        format: int32
+        example: 1
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            accessibility:
+              type: object
+              description: Detailed information about accessibility in the campground
+              properties:
+                wheelchairAccess:
+                  type: string
+                internetInfo:
+                  type: string
+                rvAllowed:
+                  type: boolean
+                cellPhoneInfo:
+                  type: string
+                fireStovePolicy:
+                  type: string
+                rvMaxLength:
+                  type: integer
+                  format: int32
+                additionalInfo:
+                  type: string
+                trailerMaxLength:
+                  type: integer
+                  format: int32
+                adaInfo:
+                  type: string
+                rvInfo:
+                  type: string
+                accessRoads:
+                  type: array
+                  items:
+                    type: string
+                trailerAllowed:
+                  type: boolean
+                classifications:
+                  type: array
+                  items:
+                    type: string
+            addresses:
+              type: array
+              description: Campground addresses (physical and mailing)
+              items:
+                type: object
+                properties:
+                  postalCode:
+                    type: string
+                  city:
+                    type: string
+                  stateCode:
+                    type: string
+                  line1:
+                    type: string
+                  type:
+                    type: string
+                    enum:
+                      - Physical
+                      - Mailing
+                  line3:
+                    type: string
+                  line2:
+                    type: string
+            amenities:
+              type: object
+              description: Detailed information about amenities available in the campground.
+              properties:
+                trashRecyclingCollection:
+                  type: string
+                toilets:
+                  type: array
+                  items:
+                    type: string
+                internetConnectivity:
+                  type: boolean
+                showers:
+                  type: array
+                  items:
+                    type: string
+                cellPhoneReception:
+                  type: boolean
+                laundry:
+                  type: boolean
+                amphitheater:
+                  type: boolean
+                dumpStation:
+                  type: boolean
+                campStore:
+                  type: boolean
+                staffOrVolunteerHostOnSite:
+                  type: string
+                potableWater:
+                  type: array
+                  items:
+                    type: string
+                iceAvailableForSale:
+                  type: boolean
+                firewoodForSale:
+                  type: boolean
+                ampitheater:
+                  type: string
+                foodStorageLockers:
+                  type: string
+            campsites:
+              type: object
+              description: Detailed information about campsites
+              properties:
+                other:
+                  type: integer
+                  format: int32
+                group:
+                  type: integer
+                  format: int32
+                horse:
+                  type: integer
+                  format: int32
+                totalSites:
+                  type: integer
+                  format: int32
+                tentOnly:
+                  type: integer
+                  format: int32
+                electricalHookups:
+                  type: integer
+                  format: int32
+                rvOnly:
+                  type: integer
+                  format: int32
+                walkBoatTo:
+                  type: integer
+                  format: int32
+            contacts:
+              type: object
+              description: Information about contacting the park regarding this campground
+              properties:
+                phoneNumbers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      phoneNumber:
+                        type: string
+                      description:
+                        type: string
+                      extension:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                          - Voice
+                          - Fax
+                          - TTY
+                emailAddresses:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      emailAddress:
+                        type: string
+                      description:
+                        type: string
+            description:
+              type: string
+              description: General description of the campground
+            directionsOverview:
+              type: string
+              description: General overview of how to get to the campground
+            directionsUrl:
+              type: string
+              description: 'Link to page, if available, that provides additional detail on getting to the campground'
+            fees:
+              type: array
+              description: Information about the cost of camping
+              items:
+                type: object
+            id:
+              type: string
+              description: Campground identification string
+            images:
+              type: array
+              description: Campground images
+              items:
+                type: string
+            latLong:
+              type: string
+              description: Campground GPS cordinates
+            name:
+              type: string
+              description: Campground name
+            operatingHours:
+              type: array
+              description: Hours and seasons when the campground is open or closed
+              items:
+                type: object
+            parkCode:
+              type: string
+              description: A variable width character code used to identify a specific park
+            regulationsOverview:
+              type: string
+              description: Information about campground regulations
+            regulationsUrl:
+              type: string
+              description: 'Link to additional information about campground regulations, if available'
+            reservationsDescription:
+              type: string
+              description: 'General description of the reservation process, if applicable'
+            reservationsSitesFirstCome:
+              type: string
+              description: 'Number of sites that are first come, first served (cannot be booked in advance)'
+            reservationsSitesReservable:
+              type: string
+              description: Number of sites that can be booked in advance
+            reservationsUrl:
+              type: string
+              description: Link to website where reservations can be made
+            weatherOverview:
+              type: string
+              description: General description of the weather in the campground over the course of a year
+          example:
+            - accessibility:
+                - wheelchairAccess: 'Some restrooms are wheelchair accessible. The campground is mainly accessed by transit bus, around half of which are wheelchair accessible.'
+                  internetInfo: ''
+                  rvAllowed: 0
+                  cellPhoneInfo: ''
+                  fireStovePolicy: Open fires are prohibited at Wonder Lake Campground. Bring a camping stove of some kind to cook your meals.
+                  rvMaxLength: 0
+                  additionalInfo: ''
+                  trailerMaxLength: 0
+                  adaInfo: 'Paths between campsites vary from compact gravel to muddy, rocky surfaces. The campground is laid out with some sites on a small hill above the level of the main campground road, while others are level with or slightly downhill from the level of the road.'
+                  rvInfo: This is a tent-only campsite—RVs and trailers are prohibited at Wonder Lake.
+                  accessRoads:
+                    - Unpaved Roads - 4WD/High clearance required
+                  trailerAllowed: 0
+                  classifications:
+                    - Limited Development Campground
+              addresses:
+                - postalCode: 99755
+                  city: Denali Park
+                  stateCode: AK
+                  line1: PO Box 9
+                  line2: ''
+                  line3: ''
+                  type: Mailing
+                - postalCode: 99755
+                  city: Denali Park
+                  stateCode: AK
+                  line1: 'Mile 85, Denali Park Road'
+                  line2: ''
+                  line3: ''
+                  type: Physical
+              amenities:
+                - trashRecyclingCollection: Yes - seasonal
+                  toilets:
+                    - Vault Toilets - year round
+                  internetConnectivity: false
+                  showers:
+                    - None
+                  cellPhoneReception: false
+                  laundry: false
+                  amphitheater: ''
+                  dumpStation: false
+                  campStore: false
+                  staffOrVolunteerHostOnSite: Yes - seasonal
+                  potableWater:
+                    - Yes - seasonal
+                  iceAvailableForSale: false
+                  firewoodForSale: false
+                  ampitheater: Yes - year round
+                  foodStorageLockers: Yes - year round
+              campsites:
+                - other: 0
+                  group: 0
+                  horse: 0
+                  totalSites: 28
+                  tentOnly: 28
+                  electricalHookups: 0
+                  rvOnly: 0
+                  walkBoatTo: 0
+              contacts:
+                - phoneNumbers:
+                    - phoneNumber: '9076839532'
+                      description: ''
+                      extension: ''
+                      type: Voice
+                - emailAddresses:
+                    - emailAddress: yell_visitor_services@nps.gov
+                      description: ''
+              description: |-
+                Wonder Lake Campground is at mile 85 on the Denali Park Road. It offers 28 sites, which are all tent-only.
+
+                It is the closest campground to Denali. Though separated by nearly 26 miles, the sheer size of the mountain makes it loom impressively over Wonder Lake Campground. Cloudy skies can obscure views, and mosquitoes can be fierce, but Wonder Lake on a clear day offers views that will last a lifetime. Bear-proof food lockers are available throughout the campground.
+              directionsOverview: Visitors may not drive to this campground. It is only accessible for campers via specialized park buses. Be sure to book a camper bus ticket in addition to paying your campground fees.
+              directionsUrl: 'http://www.nps.gov/dena/planyourvisit/campground-wonder.htm'
+              fees: null
+              id: 29
+              images: null
+              latLong: '{lat:63.4574408, lng:-150.8612003}'
+              name: Wonder Lake
+              operatingHours: null
+              parkCode: dena
+              regulationsOverview: null
+              regulationsUrl: 'http://www.nps.gov/dena/learn/management/lawsandpolicies.htm'
+              reservationsDescription: ''
+              reservationSitesFirstCome: ''
+              reservationsSitesReservable: ''
+              reservationsUrl: ''
+              weatherOverview: 'Wonder Lake tends to be cooler and wetter than the park entrance. Expect lows in the upper 30s or 40s each night. Daytime highs are typically in the upper 50s or 60s, though occasional sunny days can result in temps near 80. Mosquitoes are particularly bad most of the summer - bring a headnet!'
+            - accessibility:
+                - wheelchairAccess: Restrooms are wheelchair accessible.
+                  internetInfo: ''
+                  rvAllowed: 0
+                  cellPhoneInfo: ''
+                  fireStovePolicy: ''
+                  rvMaxLength: 0
+                  additionalInfo: ''
+                  trailerMaxLength: 0
+                  adaInfo: Surfaces in the campground are largely compacted gravel or native soils with roots and rocks. The path from the campground to the bus stop on the Denali Park Road is compacted gravel. Restrooms are wheelchair accessible.
+                  rvInfo: This is a tent-only campground.
+                  accessRoads:
+                    - Unpaved Roads - 4WD/High clearance required
+                  trailerAllowed: 0
+                  classifications:
+                    - Primitive Camping Areas
+              addresses:
+                - postalCode: 99755
+                  city: Denali Park
+                  stateCode: AK
+                  line1: PO Box 9
+                  line2: ''
+                  line3: ''
+                  type: Mailing
+                - postalCode: 99755
+                  city: Denali Park
+                  stateCode: AK
+                  line1: 'Mile 85, Denali Park Road'
+                  line2: ''
+                  line3: ''
+                  type: Physical
+              amenities:
+                - trashRecyclingCollection: Yes - seasonal
+                  toilets:
+                    - Vault Toilets - year round
+                  internetConnectivity: false
+                  showers:
+                    - None
+                  cellPhoneReception: false
+                  laundry: false
+                  amphitheater: ''
+                  dumpStation: false
+                  campStore: false
+                  staffOrVolunteerHostOnSite: Yes - seasonal
+                  potableWater:
+                    - Yes - seasonal
+                  iceAvailableForSale: false
+                  firewoodForSale: false
+                  ampitheater: Yes - year round
+                  foodStorageLockers: Yes - year round
+              campsites:
+                - other: 0
+                  group: 0
+                  horse: 0
+                  totalSites: 7
+                  tentOnly: 7
+                  electricalHookups: 0
+                  rvOnly: 0
+                  walkBoatTo: 0
+              contacts:
+                - phoneNumbers:
+                    - phoneNumber: '9076839532'
+                      description: ''
+                      extension: ''
+                      type: Voice
+                - emailAddresses:
+                    - emailAddress: yell_visitor_services@nps.gov
+                      description: ''
+              description: |-
+                Igloo Creek Campground is at mile 35 on the Park Road. It offers 7 sites, making it the smallest in Denali (along with Sanctuary River Campground, which also has 7 sites).
+
+                Igloo is tent-only - you will not find any RVs or other vehicles in this campground. It is accessible by camper bus. The bus stop is a short walk from the camp sites - less than 50 yards (meters).
+
+                Advance reservations are not possible at this campground. Visitors may only book a site upon arriving in the park.
+              directionsOverview: This campground can only be reached by bus. Be sure to book a camper bus ticket when purchasing a stay at Igloo Creek Campground.
+              directionsUrl: 'http://www.nps.gov/dena/planyourvisit/campground-igloo.htm'
+              fees: null
+              id: 34
+              images: null
+              latLong: '{lat:63.6117723, lng:-149.570902}'
+              name: Igloo Creek
+              operatingHours: null
+              parkCode: dena
+              regulationsOverview: null
+              regulationsUrl: 'http://www.nps.gov/dena/learn/management/lawsandpolicies.htm'
+              reservationsDescription: ''
+              reservationSitesFirstCome: ''
+              reservationsSitesReservable: ''
+              reservationsUrl: ''
+              weatherOverview: 'We recommend you bring a sleeping bag rated to 20 degrees F. Expect rain, though sunny days do occur periodically throughout the summer. Highs are usually in the 60s, though sometimes can reach the low 80s. Snow is possible any month of the year, however.'
+      limit:
+        type: integer
+        format: int32
+        example: 50
+      start:
+        type: integer
+        format: int32
+        example: 1
+  Event:
+    type: object
+    properties:
+      total:
+        type: integer
+        format: int32
+        example: 1
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            contactEmailAddress:
+              type: string
+              description: Email address for event contact
+            contactName:
+              type: string
+              description: Name of event contact
+            contactTelephoneNumber:
+              type: string
+              description: Phone number for event contact
+            category:
+              type: string
+              description: Category for event
+            dateEnd:
+              type: string
+              format: date-time
+              description: End date for event
+            date:
+              type: string
+              format: date-time
+              description: Date of next upcoming event
+            dates:
+              type: array
+              description: Array of event dates
+              items:
+                type: string
+                format: date-time
+            dateStart:
+              type: string
+              format: date-time
+              description: Start date for event
+            description:
+              type: string
+              description: Event description
+            feeInfo:
+              type: string
+              description: Fee information for event
+            id:
+              type: string
+              description: Unique identifier for this event
+            images:
+              type: array
+              items:
+                type: object
+                description: Event image
+                properties:
+                  altText:
+                    type: string
+                    description: Image alt text
+                  caption:
+                    type: string
+                    description: Image caption
+                  credit:
+                    type: string
+                    description: Image credit
+                  description:
+                    type: string
+                    description: Image description
+                  title:
+                    type: string
+                    description: Image title
+                  url:
+                    type: string
+                    description: Image URL
+            infoURL:
+              type: string
+              description: URL for more information about the event
+            isAllDay:
+              type: boolean
+              description: The event takes place all day
+            isFree:
+              type: boolean
+              description: The event is free
+            isRecurring:
+              type: boolean
+              description: The event has recurrence
+            isRegResRequired:
+              type: boolean
+              description: The event requires registration or reservation
+            latitude:
+              type: number
+              format: float
+              description: The latitude of the event location
+            location:
+              type: string
+              description: The location the event takes place
+            longitude:
+              type: number
+              format: float
+              description: The longitude of the event location
+            organizationName:
+              type: string
+              description: Name of the organization associated with event
+            parkFullName:
+              type: string
+              description: Name and designation of the park associated with event
+            portalName:
+              type: string
+              description: Name of the portal site associated with event
+            recurrenceDateEnd:
+              type: string
+              format: date-time
+              description: Date the event recurrence ends
+            recurrenceRule:
+              type: string
+              description: Recurrence rule for event
+            regResInfo:
+              type: string
+              description: Additional information on required reservation or registration for event
+            regResURL:
+              type: string
+              description: URL for required reservation or registration for event
+            siteCode:
+              type: string
+              description: Site code of the associated site for event
+            siteType:
+              type: string
+              description: Site type of the associated site for event
+            subjectName:
+              type: string
+              description: Name of associated subject site for event
+            tags:
+              type: array
+              description: Tags associated with event
+              items:
+                type: string
+            timeDescription:
+              type: string
+              description: Additional information about times for event
+            times:
+              type: array
+              description: Time information for event
+              items:
+                type: object
+                properties:
+                  sunriseStart:
+                    type: boolean
+                    description: Event begins at sunrise
+                  sunsetEnd:
+                    type: boolean
+                    description: Event ends at sunset
+                  timeStart:
+                    type: string
+                    format: date-time
+                    description: Time event begins
+                  timeEnd:
+                    type: string
+                    format: date-time
+                    description: Time event ends
+            title:
+              type: string
+              description: Event title
+            types:
+              type: array
+              description: Type(s) of event
+              items:
+                type: string
+          example:
+            - category: Regular Event
+              contactEmailAddress: example@nps.gov
+              contactName: John Doe
+              contactTelephoneNumber: '9999999999'
+              dateEnd: '2017-09-16'
+              date: '2019-09-14'
+              dates:
+                - '2017-09-16'
+                - '2018-09-15'
+                - '2019-09-14'
+              dateStart: '2017-09-16'
+              description: <p>Join a National Park service Ranger for a paid guided tour.</p>
+              feeInfo: The event is not free; you should call the park.
+              id: FE39616A-1DD8-B71B-0BA9DCB9BDF76670
+              images:
+                - altText: Picture of the South-West Battery with a skyscraper in the background.
+                  caption: The South-West Battery
+                  credit: NPS Photo
+                  description: The South-West Battery
+                  title: The South-West Battery
+                  url: 'https://www.nps.gov/cacl/learn/historyculture/images/369.jpg?maxwidth=650&autorotate=false'
+              infoURL: 'https://www.nps.gov'
+              isAllDay: false
+              isFree: false
+              isRecurring: true
+              isRegResRequired: true
+              latitude: 40.7034
+              location: Castle Clinton National Monument
+              longitude: -74.0168
+              organizationName: ''
+              parkFullName: Castle Clinton National Monument
+              portalName: ''
+              recurrenceDateEnd: '2023-11-20'
+              recurrenceRule: DTSTART=20171120T040000Z;UNTIL=20231120T040000Z;FREQ=DAILY;WKST=SU;COUNT=0;INTERVAL=1
+              regResInfo: Please call the park to register for this event.
+              regResURL: 'https://www.nps.gov/planyourvisit/event-details.htm?id=0D25A738-155D-451F-67D31ADD6827D16D'
+              siteCode: cacl
+              siteType: park
+              subjectName: ''
+              tags:
+                - NPS Centennial
+              timeDescription: ''
+              times:
+                - timeStart: '10:00 AM'
+                  timeEnd: '10:30 AM'
+                  sunsetEnd: false
+                  sunriseStart: false
+                - timeStart: '12:00 PM'
+                  timeEnd: '12:30 PM'
+                  sunsetEnd: false
+                  sunriseStart: false
+                - timeStart: '02:00 PM'
+                  timeEnd: '02:30 PM'
+                  sunsetEnd: false
+                  sunriseStart: false
+                - timeStart: '03:00 PM'
+                  timeEnd: '03:30 PM'
+                  sunsetEnd: false
+                  sunriseStart: false
+              title: Military Appreciation Day
+              types:
+                - Other
+            - category: Regular Event
+              contactEmailAddress: ''
+              contactName: ''
+              contactTelephoneNumber: ''
+              dateEnd: '2018-10-31'
+              date: '2018-10-29'
+              dates:
+                - '2018-10-29'
+                - '2018-10-30'
+                - '2018-10-31'
+              dateStart: '2018-10-31'
+              description: <p>Join a National Park service Ranger for a free guided tour.</p>
+              feeInfo: ''
+              id: 0D25A738-155D-451F-67D31ADD6827D16D
+              images:
+                - altText: ''
+                  caption: ''
+                  credit: ''
+                  description: ''
+                  title: ''
+                  url: ''
+              infoURL: ''
+              isAllDay: false
+              isFree: true
+              isRecurring: true
+              isRegResRequired: false
+              latitude: null
+              location: Castle Clinton NM
+              longitude: null
+              organizationName: ''
+              parkFullName: Castle Clinton National Monument
+              portalName: ''
+              recurrenceDateEnd: '2023-11-20'
+              recurrenceRule: DTSTART=20171120T040000Z;UNTIL=20231120T040000Z;FREQ=DAILY;WKST=SU;COUNT=0;INTERVAL=1
+              regResInfo: ''
+              regResURL: ''
+              siteCode: cacl
+              siteType: park
+              subjectName: ''
+              tags:
+                - NPS Centennial
+              timeDescription: ''
+              times:
+                - timeStart: '10:00 AM'
+                  timeEnd: '10:30 AM'
+                  sunsetEnd: false
+                  sunriseStart: false
+                - timeStart: '12:00 PM'
+                  timeEnd: '12:30 PM'
+                  sunsetEnd: false
+                  sunriseStart: false
+                - timeStart: '02:00 PM'
+                  timeEnd: '02:30 PM'
+                  sunsetEnd: false
+                  sunriseStart: false
+                - timeStart: '03:00 PM'
+                  timeEnd: '03:30 PM'
+                  sunsetEnd: false
+                  sunriseStart: false
+              title: Castle Clinton Guided tour
+              types:
+                - Other
+      limit:
+        type: integer
+        format: int32
+        example: 50
+      start:
+        type: integer
+        format: int32
+        example: 1
+  LessonPlan:
+    type: object
+    properties:
+      total:
+        type: integer
+        format: int32
+        example: 1
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            commonCore:
+              type: object
+              description: Educational standards that apply to this lesson
+              properties:
+                stateStandards:
+                  type: string
+                mathStandards:
+                  type: array
+                  items:
+                    type: string
+                additionalStandards:
+                  type: string
+                elaStandards:
+                  type: array
+                  items:
+                    type: string
+            duration:
+              type: string
+              description: Time it takes to peform the lesson
+            gradeLevel:
+              type: string
+              description: Grade level of students at which this lesson is aimed
+            id:
+              type: integer
+              format: int32
+              description: Unique identifier for this lesson plan
+            parks:
+              type: array
+              description: Related parks for this lesson plan
+              items:
+                type: string
+            questionObjective:
+              type: string
+              description: Objective of the lesson or the question student should be able to answer at the end of the lesson
+            subject:
+              type: string
+              description: 'Broad subject the lesson falls under= literacy and language arts, math, science, or social studies'
+            title:
+              type: string
+              description: Lesson plan title
+            url:
+              type: string
+              description: Lesson plan link
+          example:
+            - commonCore:
+                - stateStandards: "State: Nebraska\t\nSubject: History        \nGrade Level:  8th  \t\n\n State Standards:  8.1.2, 8.1.5, 8.4.2"
+                  mathStandards:
+                    - 6-8.RH.1
+                    - 6-8.RH.2
+                    - 6-8.RH.3
+                    - 6-8.RH.4
+                    - 6-8.RH.5
+                    - 6-8.RH.6
+                    - 6-8.RH.7
+                    - 6-8.RH.8
+                    - 6-8.RH.9
+                    - 6-8.RH.10
+                  additionalStandards: ''
+                  elaStandards:
+                    - 6-8.RH.1
+                    - 6-8.RH.2
+                    - 6-8.RH.3
+                    - 6-8.RH.4
+                    - 6-8.RH.5
+                    - 6-8.RH.6
+                    - 6-8.RH.7
+                    - 6-8.RH.8
+                    - 6-8.RH.9
+                    - 6-8.RH.10
+              duration: 60 Minutes
+              gradeLevel: 'Middle School: Sixth Grade through Eighth Grade'
+              id: 4837942
+              parks:
+                - home
+              questionObjective: |-
+                In "Dawes Act," students will look at the similarities and differences between the Homestead Act and the Dawes Act by analyzing primary sources. 
+                In this lesson, students will answer the following essential question: What are the cause and effects of the Dawes Act?
+              subject: Social Studies
+              title: Dawes Act
+              url: 'https://www.nps.gov/teachers/classrooms/dawact.htm'
+            - commonCore:
+                - stateStandards: ''
+                  mathStandards: null
+                  additionalStandards: ''
+                  elaStandards: null
+              duration: 90 Minutes
+              gradeLevel: 'Upper Elementary: Third Grade through Fifth Grade'
+              id: 3922862
+              parks:
+                - flni
+              questionObjective: 'This program utilizes multimedia, exhibits, oral presentations and the memorial landscape to deliver a unique learning opportunity.  The overall objective of this program is to expose students to the various passengers and crew members of Flight 93: Who they were, their names, what made them unique, and how do we remember them today at the memorial. There will also be a special emphasis on the story of Flight 93 and the actions of the passengers and crew members.'
+              subject: Social Studies
+              title: A Walk to Remember
+              url: 'https://www.nps.gov/flni/learn/education/classrooms/index.htm'
+      limit:
+        type: integer
+        format: int32
+        example: 50
+      start:
+        type: integer
+        format: int32
+        example: 1
+  NewsRelease:
+    type: object
+    properties:
+      total:
+        type: integer
+        format: int32
+        example: 1
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            abstract:
+              type: string
+              description: Short description of news release content
+            id:
+              type: string
+              description: Unique identifier for the news release
+            image:
+              type: object
+              description: News release image
+              properties:
+                credit:
+                  type: string
+                altText:
+                  type: string
+                title:
+                  type: string
+                description:
+                  type: string
+                caption:
+                  type: string
+                url:
+                  type: string
+            parkCode:
+              type: string
+              description: A variable width character code that uniquely identifies a specific park
+            releaseDate:
+              type: string
+              format: date-time
+              description: Date news release was released
+            title:
+              type: string
+              description: News release title
+            url:
+              type: string
+              description: Link to full news release
+          example:
+            - abstract: 'Chesapeake and Ohio (C&O) Canal National Historical Park will be conducting hazardous tree pruning and removal at five locations in Montgomery County; these locations are Riley’s Lock, Marsden Tract, Violettes Lock, Great Falls, and Anglers.'
+              id: 5604563
+              image:
+                - credit: ''
+                  altText: ''
+                  title: ''
+                  description: ''
+                  caption: ''
+                  url: ''
+              parkCode: choh
+              releaseDate: '2017-07-31 06:45:00.0'
+              title: C&O Canal NHP begins hazardous tree maintenance in Montgomery County
+              url: 'https://www.nps.gov/choh/learn/news/hazardous-tree-maintenance.htm'
+            - abstract: 'This week, Branching Out field teams from Boston and New York City met at Sagamore Hill National Historic Site for a four-day long gathering to learn about landscape management and work on various projects with park staff.'
+              id: 5604164
+              image:
+                - credit: NPS/Paul Cecere
+                  altText: Working on the nature trial
+                  title: Branching Out students ready for work on the nature trail
+                  description: Branching Out students ready for work on the nature trail.
+                  caption: Branching Out students ready for work on the nature trail.
+                  url: 'https://www.nps.gov/sahi/learn/news/images/IMG_5819_1.JPG'
+              parkCode: sahi
+              releaseDate: '2017-07-30 12:30:00.0'
+              title: Branching Out Field Teams Converge on Sagamore Hill
+              url: 'https://www.nps.gov/sahi/learn/news/branching-out-field-teams-converge-on-sagamore-hill.htm'
+      limit:
+        type: integer
+        format: int32
+        example: 50
+      start:
+        type: integer
+        format: int32
+        example: 1
+  Park:
+    type: object
+    properties:
+      total:
+        type: integer
+        format: int32
+        example: 1
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            addresses:
+              type: array
+              description: Park addresses (physical and mailing)
+              items:
+                type: object
+                properties:
+                  postalCode:
+                    type: string
+                  city:
+                    type: string
+                  stateCode:
+                    type: string
+                  line1:
+                    type: string
+                  type:
+                    type: string
+                    enum:
+                      - Physical
+                      - Mailing
+                  line3:
+                    type: string
+                  line2:
+                    type: string
+            contacts:
+              type: object
+              description: Information about contacting the park
+              properties:
+                phoneNumbers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      phoneNumber:
+                        type: string
+                      description:
+                        type: string
+                      extension:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                          - Voice
+                          - Fax
+                          - TTY
+                emailAddresses:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      emailAddress:
+                        type: string
+                      description:
+                        type: string
+            description:
+              type: string
+              description: Introductory paragraph from the park homepage
+            designation:
+              type: string
+              description: 'Type of designation (eg, national park, national monument, national recreation area, etc)'
+            directionsInfo:
+              type: string
+              description: General overview of how to get to the park
+            directionsUrl:
+              type: string
+              description: 'Link to page, if available, that provides additional detail on getting to the park'
+            entranceFees:
+              type: array
+              description: Fee for entering the park
+              items:
+                type: object
+                properties:
+                  cost:
+                    type: number
+                    format: float
+                  description:
+                    type: string
+                  title:
+                    type: string
+            entrancePasses:
+              type: array
+              description: Passes available to provide entry into the park
+              items:
+                type: object
+                properties:
+                  cost:
+                    type: number
+                    format: float
+                  description:
+                    type: string
+                  title:
+                    type: string
+            fullName:
+              type: string
+              description: Full park name (with designation)
+            id:
+              type: string
+              description: Park identification string
+            images:
+              type: array
+              description: Park images
+              items:
+                type: object
+                properties:
+                  credit:
+                    type: string
+                  altText:
+                    type: string
+                  title:
+                    type: string
+                  id:
+                    type: integer
+                    format: int32
+                  caption:
+                    type: string
+                  url:
+                    type: string
+            latLong:
+              type: string
+              description: Park GPS cordinates
+            name:
+              type: string
+              description: Short park name (no designation)
+            operatingHours:
+              type: array
+              description: Hours and seasons when the park is open or closed
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  standardHours:
+                    type: object
+                    properties:
+                      sunday:
+                        type: string
+                      monday:
+                        type: string
+                      tuesday:
+                        type: string
+                      wednesday:
+                        type: string
+                      thursday:
+                        type: string
+                      friday:
+                        type: string
+                      saturday:
+                        type: string
+                  exceptions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        startDate:
+                          type: string
+                          format: date-time
+                        endDate:
+                          type: string
+                          format: date-time
+                        exceptionHours:
+                          type: object
+                          properties:
+                            sunday:
+                              type: string
+                            monday:
+                              type: string
+                            tuesday:
+                              type: string
+                            wednesday:
+                              type: string
+                            thursday:
+                              type: string
+                            friday:
+                              type: string
+                            saturday:
+                              type: string
+            parkCode:
+              type: string
+              description: A variable width character code used to identify a specific park
+            states:
+              type: string
+              description: State(s) the park is located in (comma-delimited list)
+            url:
+              type: string
+              description: Park Website
+            weatherInfo:
+              type: string
+              description: General description of the weather in the park over the course of a year
+          example:
+            addresses:
+              - line1: 2 Officers Row
+                line2: Yellowstone National Park Headquarters
+                line3: ''
+                city: Yellowstone National Park
+                stateCode: WY
+                postalCode: '82190'
+                type: Physical
+              - line1: P.O. Box 168
+                line2: ''
+                line3: ''
+                city: Yellowstone National Park
+                stateCode: WY
+                postalCode: 82190-0168
+                type: Mailing
+            contacts:
+              - phoneNumbers:
+                  - phoneNumber: '3073447381'
+                    description: ''
+                    extension: ''
+                    type: Voice
+                  - phoneNumber: '3073442014'
+                    description: ''
+                    extension: ''
+                    type: Fax
+                  - phoneNumber: '3073442386'
+                    description: ''
+                    extension: ''
+                    type: TTY
+                emailAddresses:
+                  - emailAddress: yell_visitor_services@nps.gov
+                    description: ''
+            description: 'Visit Yellowstone and experience the world''s first national park. Marvel at a volcano''s hidden power rising up in colorful hot springs, mudpots, and geysers. Explore mountains, forests, and lakes to watch wildlife and witness the drama of the natural world unfold. Discover the history that led to the conservation of our national treasures ''for the benefit and enjoyment of the people.'''
+            designation: National Park
+            directionsInfo: 'Yellowstone National Park covers nearly 3,500 square miles in the northwest corner of Wyoming (3% of the park is in Montana and 1% is in Idaho). Yellowstone has five entrance stations, and several are closed to regular vehicles during winter. It takes many hours to drive between these entrances, so be sure to check the status of roads at the entrance you intend to use while planning your trip and before you arrive.'
+            directionsUrl: 'https://www.nps.gov/yell/planyourvisit/directions.htm'
+            entranceFees:
+              - cost: 30
+                description: 7-day pass for Yellowstone National Park
+                title: 'Yellowstone (private, non-commercial vehicle)'
+              - cost: 25
+                description: 7-day pass for Yellowstone National Park. Snowmobile entry limited to guided tours or permit holders.
+                title: Yellowstone (motorcycle or snowmobile)
+            entrancePasses:
+              - cost: 60
+                description: 'Annual pass providing free entrance to Yellowstone National Park for one year; valid through the month of purchase. Winter use: On a snowmobile, admits the signers and children (residing in the same household under the age of 21). In a snowcoach or shuttle, it admits the signers and up to three additional persons (16 and older) for a total of four people.'
+                title: Yellowstone National Park Annual Pass
+            fullName: Yellowstone National Park
+            id: F58C6D24-8D10-4573-9826-65D42B8B83AD
+            images:
+              - credit: NPS/Jim Peaco
+                altText: Crowd watching Aurum Geyser erupt
+                title: Aurum Geyser
+                id: 1789
+                caption: Aurum Geyser Erupting
+                url: 'https://www.nps.gov/common/uploads/structured_data/3C7D2FBB-1DD8-B71B-0BED99731011CFCE.jpg'
+              - credit: NPS/Neal Herbert
+                altText: Photo of bison in Lamar Valley
+                title: Bison in Lamar Valley
+                id: 1792
+                caption: Bison in Lamar Valley
+                url: 'https://www.nps.gov/common/uploads/structured_data/3C7D34E6-1DD8-B71B-0BBB1C0F478318E2.jpg'
+            latLong: 'lat:44.59824417, long:-110.5471695'
+            name: Yellowstone
+            operatingHours:
+              - name: All Park Hours
+                description: |-
+                  Yellowstone is open daily, year-round, although activities and services are limited at night and certain times of year. The park has five entrance stations, but not all entrance stations are open year-round. Make sure to carefully read about access at each station at different times of year. And remember, all dates are weather dependent!
+
+                  Please note that camping is possible only in designated campgrounds.
+                standardHours:
+                  - sunday: All Day
+                    monday: All Day
+                    tuesday: All Day
+                    wednesday: All Day
+                    thursday: All Day
+                    friday: All Day
+                    saturday: All Day
+                exceptions:
+                  - name: Thanksgiving Day
+                    startDate: '{ts ''2015-11-26 00:00:00''}'
+                    endDate: '{ts ''2015-11-26 00:00:00''}'
+                    exceptionHours:
+                      - sunday: Closed
+                        monday: Closed
+                        tuesday: Closed
+                        wednesday: Closed
+                        thursday: Closed
+                        friday: Closed
+                        saturday: Closed
+                  - name: Christmas Day
+                    startDate: '{ts ''2015-12-25 00:00:00''}'
+                    endDate: '{ts ''2015-12-25 00:00:00''}'
+                    exceptionHours:
+                      - sunday: Closed
+                        monday: Closed
+                        tuesday: Closed
+                        wednesday: Closed
+                        thursday: Closed
+                        friday: Closed
+                        saturday: Closed
+              - name: West Entrance
+                description: 'Adjacent to the town of West Yellowstone, MT, the West Entrance is usually open (weather dependent) to wheeled vehicles from the third Friday in April through early November, and to tracked-oversnow (snowmobiles and snowcoaches) vehicles from December 15 to March 15.'
+                standardHours:
+                  - sunday: Closed
+                    monday: Closed
+                    tuesday: Closed
+                    wednesday: Closed
+                    thursday: Closed
+                    friday: Closed
+                    saturday: Closed
+                exceptions: null
+            parkCode: yell
+            states: 'ID,MT,WY'
+            url: 'https://www.nps.gov/yell/index.htm'
+            weatherInfo: 'Yellowstone''s weather can vary quite a bit, even in a single day. In the summer, daytime highs can exceed 70F (25C), only to drop 20 or more degrees when a thunderstorm rolls through. It can snow during any month of the year, and winter lows frequently drop below zero, especially at night. Bring a range of clothing options, including a warm jacket and rain gear, even in the summer.'
+      limit:
+        type: integer
+        format: int32
+        example: 50
+      start:
+        type: integer
+        format: int32
+        example: 1
+  Person:
+    type: object
+    properties:
+      total:
+        type: integer
+        format: int32
+        example: 1
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+              description: Uniquely identifies person record
+            listingDescription:
+              type: string
+              description: Short description of the content
+            listingImage:
+              type: object
+              description: Small image that accompanies the short description
+              properties:
+                credit:
+                  type: string
+                altText:
+                  type: string
+                title:
+                  type: string
+                description:
+                  type: string
+                caption:
+                  type: string
+                url:
+                  type: string
+            relatedParks:
+              type: string
+              description: Parks that have a tie to this asset in a comma-delimited list
+            title:
+              type: string
+              description: Asset title
+            url:
+              type: string
+              description: 'Link to more information about the asset, if available'
+          example:
+            - id: 816961
+              listingDescription: Served in the US Arm Harbor Craft Detachment during the World War II Aleutian campaign.
+              listingImage:
+                - credit: ''
+                  altText: ''
+                  title: ''
+                  description: ''
+                  caption: ''
+                  url: ''
+              relatedParks: ''
+              title: Harry Bailey
+              url: 'https://www.nps.gov/people/harry-bailey.htm'
+            - id: 817106
+              listingDescription: Joseph Sasser was enlisted in the US Army and part of the battle on Attu Island and the invasion of Kiska
+              listingImage:
+                - credit: ''
+                  altText: ''
+                  title: ''
+                  description: ''
+                  caption: ''
+                  url: ''
+              relatedParks: ''
+              title: Joseph Sasser
+              url: 'https://www.nps.gov/people/joseph-sasser.htm'
+      limit:
+        type: integer
+        format: int32
+        example: 50
+      start:
+        type: integer
+        format: int32
+        example: 1
+  Place:
+    type: object
+    properties:
+      total:
+        type: integer
+        format: int32
+        example: 1
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Uniquely identifies place record
+            listingDescription:
+              type: string
+              description: Short description of the content
+            listingImage:
+              type: object
+              description: Small image that accompanies the short description
+              properties:
+                credit:
+                  type: string
+                altText:
+                  type: string
+                title:
+                  type: string
+                description:
+                  type: string
+                caption:
+                  type: string
+                url:
+                  type: string
+            relatedParks:
+              type: string
+              description: Parks that have a tie to this asset in a comma-delimited list
+            title:
+              type: string
+              description: Asset title
+            url:
+              type: string
+              description: 'Link to more information about the asset, if available'
+          example:
+            - id: 833231
+              listingDescription: 'Netherlands Carillon. Located in Arlington Ridge Park, this monument was a gift from the people of the Netherlands for American aid during and after World War II that symbolizes the friendship between the two countries. It is cast from bronze alloy and features 50 bells, each carrying an emblem and verse representing a group within Dutch society.'
+              listingImage:
+                - credit: ''
+                  altText: ''
+                  title: ''
+                  description: ''
+                  caption: ''
+                  url: ''
+              relatedParks: ''
+              title: The Netherlands Carillon
+              url: 'https://www.nps.gov/places/netherlandscarillon.htm'
+            - id: 835514
+              listingDescription: 'The Klamath River Radar Station B-71 in Redwood National Park, California, is a rare, surviving World War II early-warning radar station. Rather than using camouflage materials, the buildings of Radar Station B-71 were constructed to resemble farm buildings to disguise their true purpose. The station consisted of three buildings: a power building disguised as a farmhouse, an operations building, and a privy. The site was protected with anti-aircraft guns and military police.'
+              listingImage:
+                - credit: ''
+                  altText: ''
+                  title: ''
+                  description: ''
+                  caption: ''
+                  url: ''
+              relatedParks: ''
+              title: 'Radar Station B-71: Redwood National Park'
+              url: 'https://www.nps.gov/places/redwoodradarstation.htm'
+      limit:
+        type: integer
+        format: int32
+        example: 50
+      start:
+        type: integer
+        format: int32
+        example: 1
+  VisitorCenter:
+    type: object
+    properties:
+      total:
+        type: integer
+        format: int32
+        example: 1
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            addresses:
+              type: array
+              description: Visitor Center addresses (physical and mailing)
+              items:
+                type: object
+                properties:
+                  postalCode:
+                    type: string
+                  city:
+                    type: string
+                  stateCode:
+                    type: string
+                  line1:
+                    type: string
+                  type:
+                    type: string
+                    enum:
+                      - Physical
+                      - Mailing
+                  line3:
+                    type: string
+                  line2:
+                    type: string
+            contacts:
+              type: array
+              items:
+                type: object
+              description: Information about contacting staff at the facility
+              properties:
+                phoneNumbers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      phoneNumber:
+                        type: string
+                      description:
+                        type: string
+                      extension:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                          - Voice
+                          - Fax
+                          - TTY
+                emailAddresses:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      emailAddress:
+                        type: string
+                      description:
+                        type: string
+            description:
+              type: string
+              description: General description of the facility
+            directionsInfo:
+              type: string
+              description: General overview of how to get to the facility
+            directionsUrl:
+              type: string
+              description: 'Link to page, if available, that provides additional detail on getting to the facility'
+            id:
+              type: string
+              description: ID
+            latLong:
+              type: string
+              description: Facility latitude and longitude
+            name:
+              type: string
+              description: Facility name
+            operatingHours:
+              type: array
+              description: Hours and seasons when the facility is open or closed
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  standardHours:
+                    type: object
+                    properties:
+                      sunday:
+                        type: string
+                      monday:
+                        type: string
+                      tuesday:
+                        type: string
+                      wednesday:
+                        type: string
+                      thursday:
+                        type: string
+                      friday:
+                        type: string
+                      saturday:
+                        type: string
+                  exceptions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        startDate:
+                          type: string
+                          format: date-time
+                        endDate:
+                          type: string
+                          format: date-time
+                        exceptionHours:
+                          type: object
+                          properties:
+                            sunday:
+                              type: string
+                            monday:
+                              type: string
+                            tuesday:
+                              type: string
+                            wednesday:
+                              type: string
+                            thursday:
+                              type: string
+                            friday:
+                              type: string
+                            saturday:
+                              type: string
+            parkCode:
+              type: string
+              description: A variable width character code used to identify a specific park
+            url:
+              type: string
+              description: The URL corresponding to the visitor center
+          example:
+            - contacts:
+                - phoneNumbers: []
+                  emailAddresses: []
+              operatingHours: []
+              latLong: '{lat:35.1368171, lng:-81.8180957}'
+              description: |-
+                Museum contains a reproduction 3-pounder cannon, other weapons of the Revolutionary War period, and exhibits.
+                "Cowpens: A Battle Remembered" is an 18-minute video shown hourly in the museum. 
+                Fiber-optic Map llustrates the Southern Campaign of the American Revolution and the battle tactics employed by Daniel Morgan at Cowpens. (13 minutes)
+                Sales Outlet operated by Eastern National offers books, postcards, and theme-related souvenirs.
+              parkCode: cowp
+              addresses: []
+              id: 40
+              directionsInfo: 'Cowpens National Battlefield is 3 miles west of Chesnee, 10 miles east of Gaffney, and 17 miles south of Spartanburg on SC Hwy 11. For more detailed information, please visit our webpage at http://www.nps.gov/cowp/planyourvisit/directions.htm.'
+              directionsUrl: ''
+              url: ''
+              name: Cowpens National Battlefield
+            - contacts:
+                - phoneNumbers: []
+                  emailAddresses: []
+              operatingHours: []
+              latLong: '{lat:63.7308262, lng:-148.9171829}'
+              description: 'Open in summer only, this is the main visitor center near the park entrance. Here, you can watch the park film; check out a variety of exhibits about the natural and cultural history of the Denali area; and join a variety of ranger walks or talks.'
+              parkCode: dena
+              addresses: []
+              id: 23
+              directionsInfo: 'Upon arriving in Denali, travel 1.5 miles down the road until you see signs for the Denali Visitor Center.'
+              directionsUrl: 'http://www.nps.gov/dena/planyourvisit/directions.htm'
+              url: 'http://www.nps.gov/dena/planyourvisit/the-denali-visitor-center.htm'
+              name: Denali Visitor Center
+      limit:
+        type: integer
+        format: int32
+        example: 50
+      start:
+        type: integer
+        format: int32
+        example: 1
+
