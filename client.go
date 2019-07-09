@@ -4,8 +4,10 @@ package npsapi
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 )
@@ -13,6 +15,9 @@ import (
 const (
 	baseURL = "https://developer.nps.gov/api/v1/"
 )
+
+// ErrFetchingData is a type of generic error when the NPS API does not return a valid response.
+var ErrFetchingData = errors.New("error talking to NPS API")
 
 // Client connects to the NPS API backend.
 type Client struct {
@@ -54,6 +59,10 @@ func (c *Client) fetch(ctx context.Context, endpoint string, params map[string]s
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
+	}
+	if resp.StatusCode != 200 {
+		log.Printf("Backend responded with code: %d: %s", resp.StatusCode, body)
+		return nil, ErrFetchingData
 	}
 
 	if err := parseError(body); err != nil {
