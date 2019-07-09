@@ -1,0 +1,70 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.019064,
+          40.692744
+        ]
+      },
+      "properties": {
+        "code": "gois"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.496008,
+          40.885876
+        ]
+      },
+      "properties": {
+        "code": "sahi"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.542617,
+          40.762744
+        ]
+      },
+      "properties": {
+        "code": "morr"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.179654,
+          40.914529
+        ]
+      },
+      "properties": {
+        "code": "grfa"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.002150,
+          40.461617
+        ]
+      },
+      "properties": {
+        "code": "gate"
+      }
+    }
+  ]
+}
