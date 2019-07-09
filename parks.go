@@ -4,6 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"log"
+	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -22,7 +25,19 @@ type Park struct {
 	Code string
 	// States the park is in.
 	States []string
+	// Geospatial location of the park.
+	Location *LatLng
 }
+
+// LatLng cooordinate.
+type LatLng struct {
+	// Latitude.
+	Lat float64
+	// Longitude
+	Lng float64
+}
+
+var latLngRe = regexp.MustCompile(`lat:([\d\.\-]+), long:([\d\.\-]+)`)
 
 // ListParks finds all the parks.
 func (c *Client) ListParks(ctx context.Context) ([]Park, error) {
@@ -62,6 +77,7 @@ func (c *Client) fetchParks(ctx context.Context, params map[string]string) ([]Pa
 			FullName string
 			ParkCode string
 			States   string
+			LatLong  string
 		}
 	}{}
 
@@ -71,15 +87,38 @@ func (c *Client) fetchParks(ctx context.Context, params map[string]string) ([]Pa
 
 	parks := []Park{}
 	for _, p := range data.Data {
+		latLng, err := parseLatLng(p.LatLong)
+		if err != nil {
+			log.Printf("error parsing %s: %v", p.LatLong, err)
+		}
+
 		park := Park{
 			ID:       p.ID,
 			Name:     p.Name,
 			FullName: p.FullName,
 			Code:     p.ParkCode,
 			States:   strings.Split(p.States, ","),
+			Location: latLng,
 		}
 		parks = append(parks, park)
 	}
 
 	return parks, nil
+}
+
+func parseLatLng(latLong string) (*LatLng, error) {
+	ll := latLngRe.FindStringSubmatch(latLong)
+	if len(ll) < 3 {
+		return nil, nil
+	}
+	lat, err := strconv.ParseFloat(ll[1], 64)
+	if err != nil {
+		return nil, err
+	}
+	lng, err := strconv.ParseFloat(ll[2], 64)
+	if err != nil {
+		return nil, err
+	}
+
+	return &LatLng{lat, lng}, nil
 }
