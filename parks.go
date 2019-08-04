@@ -56,6 +56,7 @@ func (c *Client) ListParks(ctx context.Context) ([]Park, error) {
 	parks := []Park{}
 	var mErr *multierror.Error
 	wg := sync.WaitGroup{}
+	m := sync.Mutex{}
 
 	for i := 0; i < maxParks; i += fetchSize {
 		wg.Add(1)
@@ -70,7 +71,9 @@ func (c *Client) ListParks(ctx context.Context) ([]Park, error) {
 				mErr = multierror.Append(mErr, err)
 				return
 			}
+			m.Lock()
 			parks = append(parks, p...)
+			m.Unlock()
 		}(i)
 	}
 	wg.Wait()

@@ -4,9 +4,15 @@ import (
 	"context"
 	"net/http"
 	"net/http/httptest"
-	"reflect"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
 )
+
+func parkLess(p1, p2 *Park) bool {
+	return p1.Code < p2.Code
+}
 
 func TestListParks(t *testing.T) {
 	gotKey := ""
@@ -57,8 +63,8 @@ func TestListParks(t *testing.T) {
 			URL:         "https://www.nps.gov/gate/index.htm",
 		},
 	}
-	if !reflect.DeepEqual(gotParks, wantParks) {
-		t.Errorf("ListParks() got %+v, want %+v", gotParks, wantParks)
+	if diff := cmp.Diff(gotParks, wantParks, cmpopts.SortSlices(parkLess)); diff != "" {
+		t.Errorf("ListParks() got %+v, want %+v\n%s", gotParks, wantParks, diff)
 	}
 }
 
@@ -104,8 +110,8 @@ func TestGetPark(t *testing.T) {
 		if gotErr != tc.wantErr {
 			t.Errorf("GetPark(%s) unexpected error, got %v, want %v", tc.parkCode, gotErr, tc.wantErr)
 		}
-		if !reflect.DeepEqual(gotPark, tc.wantPark) {
-			t.Errorf("GetPark(%s) got %v, want %v", tc.parkCode, gotPark, tc.wantPark)
+		if diff := cmp.Diff(gotPark, tc.wantPark); diff != "" {
+			t.Errorf("GetPark(%s) got %v, want %v\n%s", tc.parkCode, gotPark, tc.wantPark, diff)
 		}
 	}
 }
