@@ -27,6 +27,10 @@ type Park struct {
 	States []string
 	// Geospatial location of the park.
 	Location *LatLng
+	// Decription of the park.
+	Description string
+	// URL of the park website.
+	URL string
 }
 
 // LatLng cooordinate.
@@ -72,12 +76,14 @@ func (c *Client) fetchParks(ctx context.Context, params map[string]string) ([]Pa
 
 	data := struct {
 		Data []struct {
-			ID       string
-			Name     string
-			FullName string
-			ParkCode string
-			States   string
-			LatLong  string
+			ID          string
+			Name        string
+			FullName    string
+			ParkCode    string
+			States      string
+			LatLong     string
+			Description string
+			URL         string
 		}
 	}{}
 
@@ -93,12 +99,14 @@ func (c *Client) fetchParks(ctx context.Context, params map[string]string) ([]Pa
 		}
 
 		park := Park{
-			ID:       p.ID,
-			Name:     p.Name,
-			FullName: p.FullName,
-			Code:     p.ParkCode,
-			States:   strings.Split(p.States, ","),
-			Location: latLng,
+			ID:          p.ID,
+			Name:        p.Name,
+			FullName:    p.FullName,
+			Code:        p.ParkCode,
+			States:      strings.Split(p.States, ","),
+			Location:    latLng,
+			Description: p.Description,
+			URL:         p.URL,
 		}
 		parks = append(parks, park)
 	}
