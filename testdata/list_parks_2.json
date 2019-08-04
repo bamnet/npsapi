@@ -1,0 +1,21 @@
+{
+    "total": "1",
+    "data": [
+        {
+            "states": "NY,NJ",
+            "latLong": "lat:40.56536246, long:-73.9171087",
+            "description": "Gateway is a large diverse urban park...",
+            "designation": "National Recreation Area",
+            "parkCode": "gate",
+            "id": "BBC5BE3F-E921-40B5-A850-F259D9FAF88C",
+            "directionsInfo": "Gateway is located in two states; NJ and NY, and has three units:  Jamaica Bay, Sandy Hook and Staten Island.  You can access most of our park by car and public transportation.   Please visit our website for specific directions to all of our units",
+            "directionsUrl": "http:\/\/www.nps.gov\/gate\/planyourvisit\/directions.htm",
+            "fullName": "Gateway National Recreation Area",
+            "url": "https:\/\/www.nps.gov\/gate\/index.htm",
+            "weatherInfo": "Gateway National Recreation Area includes several separate land areas spread throughout the New York metropolitan area. The New York area experiences four distinct seasons. Temperatures are moderate in the spring and fall, but range from the high 90's during the summer to snow and sleet in winter.",
+            "name": "Gateway"
+        }
+    ],
+    "limit": 50,
+    "start": 1
+}

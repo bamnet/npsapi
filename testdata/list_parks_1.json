@@ -1,0 +1,21 @@
+{
+    "total": "2",
+    "data": [
+        {
+            "states": "DC",
+            "latLong": "lat:38.916554, long:-77.025977",
+            "description": "Over 200,000 African-American soldiers...",
+            "designation": "",
+            "parkCode": "afam",
+            "id": "1A47416F-DAA3-4137-9F30-14AF86B4E547",
+            "directionsInfo": "The memorial is located at the corner of Vermont Avenue, 10th St, and U Street NW, near the U Street\/African-American Civil War Memorial\/Cardozo Metro Station.",
+            "directionsUrl": "http:\/\/www.nps.gov\/afam\/planyourvisit\/directions.htm",
+            "fullName": "African American Civil War Memorial",
+            "url": "https:\/\/www.nps.gov\/afam\/index.htm",
+            "weatherInfo": "Washington DC gets to see all four seasons. Humidity will make the temps feel hotter in summer and colder in winter.\n\nSpring (March - May) Temp: Average high is 65.5 degrees with a low of 46.5 degrees\n\nSummer (June - August) Temp: Average high is 86 degrees with a low of 68.5 degrees\n\nFall (September - November) Temp: Average high is 68 degrees with a low of 51.5 degrees\n\nWinter (December - February) Temp: Average high is 45 degrees with a low of 30 degrees\n\n(Source: www.usclimatedata.com)",
+            "name": "African American Civil War Memorial"
+        }
+    ],
+    "limit": 50,
+    "start": 1
+}

@@ -11,8 +11,16 @@ import (
 func TestListParks(t *testing.T) {
 	gotKey := ""
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		gotKey = r.Header.Get("X-Api-Key")
-		http.ServeFile(w, r, "testdata/list_parks.json")
+		q := r.URL.Query()
+		switch q["start"][0] {
+		case "0":
+			gotKey = r.Header.Get("X-Api-Key")
+			http.ServeFile(w, r, "testdata/list_parks_1.json")
+		case "100":
+			http.ServeFile(w, r, "testdata/list_parks_2.json")
+		default:
+			http.ServeFile(w, r, "testdata/list_parks_n.json")
+		}
 	}))
 	defer ts.Close()
 

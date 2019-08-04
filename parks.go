@@ -8,10 +8,18 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"sync"
+
+	"github.com/hashicorp/go-multierror"
 )
 
 // ErrParkNotFound is a type of error returned when no parks were found.
 var ErrParkNotFound = errors.New("park not found")
+
+const (
+	fetchSize = 100 // Fetch up to 100 parks at once.
+	maxParks  = 999 // Attempt to fetch a total of 999 parks.
+)
 
 // Park basics include location, contact, and operating hours for each national park.
 type Park struct {
@@ -45,10 +53,28 @@ var latLngRe = regexp.MustCompile(`lat:([\d\.\-]+), long:([\d\.\-]+)`)
 
 // ListParks finds all the parks.
 func (c *Client) ListParks(ctx context.Context) ([]Park, error) {
-	params := map[string]string{
-		"limit": "99999", // Fetch more parks than we have.
+	parks := []Park{}
+	var mErr *multierror.Error
+	wg := sync.WaitGroup{}
+
+	for i := 0; i < maxParks; i += fetchSize {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			params := map[string]string{
+				"limit": strconv.Itoa(fetchSize),
+				"start": strconv.Itoa(i),
+			}
+			p, err := c.fetchParks(ctx, params)
+			if err != nil {
+				mErr = multierror.Append(mErr, err)
+				return
+			}
+			parks = append(parks, p...)
+		}(i)
 	}
-	return c.fetchParks(ctx, params)
+	wg.Wait()
+	return parks, mErr.ErrorOrNil()
 }
 
 // GetPark finds a specific park with a 4-character code.
