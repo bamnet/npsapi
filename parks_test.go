@@ -10,10 +10,6 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 )
 
-func parkLess(p1, p2 *Park) bool {
-	return p1.Code < p2.Code
-}
-
 func TestListParks(t *testing.T) {
 	gotKey := ""
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -63,7 +59,9 @@ func TestListParks(t *testing.T) {
 			URL:         "https://www.nps.gov/gate/index.htm",
 		},
 	}
-	if diff := cmp.Diff(gotParks, wantParks, cmpopts.SortSlices(parkLess)); diff != "" {
+	if diff := cmp.Diff(gotParks, wantParks, cmpopts.SortSlices(func(p1, p2 Park) bool {
+		return p1.Code < p2.Code
+	})); diff != "" {
 		t.Errorf("ListParks() got %+v, want %+v\n%s", gotParks, wantParks, diff)
 	}
 }
