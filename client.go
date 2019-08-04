@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	baseURL = "https://developer.nps.gov/api/v1/"
+	defaultURL = "https://developer.nps.gov/api/v1/"
 )
 
 // ErrFetchingData is a type of generic error when the NPS API does not return a valid response.
@@ -22,6 +22,7 @@ var ErrFetchingData = errors.New("error talking to NPS API")
 // Client connects to the NPS API backend.
 type Client struct {
 	httpClient *http.Client
+	baseURL    string
 	apiKey     string
 }
 
@@ -30,11 +31,11 @@ type Client struct {
 // An API Key is required for use and can be obtained at:
 // https://www.nps.gov/subjects/developer/get-started.htm
 func NewClient(apiKey string) *Client {
-	return &Client{&http.Client{}, apiKey}
+	return &Client{&http.Client{}, defaultURL, apiKey}
 }
 
 func (c *Client) fetch(ctx context.Context, endpoint string, params map[string]string) ([]byte, error) {
-	u, err := url.Parse(baseURL)
+	u, err := url.Parse(c.baseURL)
 	if err != nil {
 		return nil, err
 	}
