@@ -65,6 +65,45 @@
       "properties": {
         "code": "gate"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.233936,
+          40.783974
+        ]
+      },
+      "properties": {
+        "code": "edis"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.562157,
+          42.911400
+        ]
+      },
+      "properties": {
+        "code": "hart"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -76.800202,
+          42.910707
+        ]
+      },
+      "properties": {
+        "code": "wori"
+      }
     }
   ]
 }
