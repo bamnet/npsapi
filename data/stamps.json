@@ -104,6 +104,32 @@
       "properties": {
         "code": "wori"
       }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.521903,
+          35.733742
+        ]
+      },
+      "properties": {
+        "code": "grsm"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.536775,
+          35.685641
+        ]
+      },
+      "properties": {
+        "code": "grsm"
+      }
     }
   ]
 }
