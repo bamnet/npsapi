@@ -10,7 +10,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/hashicorp/go-multierror"
+	"golang.org/x/sync/errgroup"
 )
 
 // ErrParkNotFound is a type of error returned when no parks were found.
@@ -53,31 +53,32 @@ var latLngRe = regexp.MustCompile(`lat:([\d\.\-]+), long:([\d\.\-]+)`)
 
 // ListParks finds all the parks.
 func (c *Client) ListParks(ctx context.Context) ([]Park, error) {
+	g, ctx := errgroup.WithContext(ctx)
+
 	parks := []Park{}
-	var mErr *multierror.Error
-	wg := sync.WaitGroup{}
 	m := sync.Mutex{}
 
 	for i := 0; i < maxParks; i += fetchSize {
-		wg.Add(1)
-		go func(i int) {
-			defer wg.Done()
+		i := i
+		g.Go(func() error {
 			params := map[string]string{
 				"limit": strconv.Itoa(fetchSize),
 				"start": strconv.Itoa(i),
 			}
 			p, err := c.fetchParks(ctx, params)
-			if err != nil {
-				mErr = multierror.Append(mErr, err)
-				return
+			if err == nil {
+				m.Lock()
+				parks = append(parks, p...)
+				m.Unlock()
 			}
-			m.Lock()
-			parks = append(parks, p...)
-			m.Unlock()
-		}(i)
+			return err
+		})
 	}
-	wg.Wait()
-	return parks, mErr.ErrorOrNil()
+
+	if err := g.Wait(); err != nil {
+		return nil, err
+	}
+	return parks, nil
 }
 
 // GetPark finds a specific park with a 4-character code.
