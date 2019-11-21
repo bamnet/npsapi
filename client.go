@@ -62,7 +62,7 @@ func (c *Client) fetch(ctx context.Context, endpoint string, params map[string]s
 		return nil, err
 	}
 	if resp.StatusCode != 200 {
-		log.Printf("Backend responded with code: %d: %s", resp.StatusCode, body)
+		log.Printf("Backend responded with code: %d", resp.StatusCode)
 		return nil, ErrFetchingData
 	}
 

@@ -2,6 +2,7 @@ package npsapi
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -111,5 +112,22 @@ func TestGetPark(t *testing.T) {
 		if diff := cmp.Diff(gotPark, tc.wantPark); diff != "" {
 			t.Errorf("GetPark(%s) got %v, want %v\n%s", tc.parkCode, gotPark, tc.wantPark, diff)
 		}
+	}
+}
+
+func TestGetParkServerError(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprint(w, `<html><head><title>Server Error</title></head><body>Error</body></html>`)
+	}))
+	defer ts.Close()
+
+	c := NewClient("apikeyhere")
+	c.baseURL = ts.URL
+
+	wantErr := ErrFetchingData
+	_, gotErr := c.GetPark(context.Background(), "whocares")
+	if gotErr != wantErr {
+		t.Errorf("GotPark() unexpected error, got %v, want %v", gotErr, wantErr)
 	}
 }
